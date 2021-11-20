@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Services\JWTService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -10,10 +12,10 @@ use Auth0\Login\Contract\Auth0UserRepository;
 
 class Auth0Controller extends Controller
 {
-    public function __construct(Auth0UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(
+        private Auth0UserRepository $userRepository, 
+        private JWTService $JWTService,
+    ) {}
 
     public function login() {
         return App::make('auth0')->login(
@@ -43,9 +45,17 @@ class Auth0Controller extends Controller
                 // If not, the user will be fine
                 $user = $auth0User;
             }
-
             \Auth::login($user, $service->rememberUser());
-            dd($user);
+            $userDB = User::where('email', $user->getUserInfo()['email'])->first();
+            if(!$userDB) {
+                $userDB = User::create([
+                    "name" => $user->getUserInfo()['name'],
+                    "email" => $user->getUserInfo()['email'],
+                    "point" => 0,
+                ]);
+                $userDB->save();
+            }
+            echo $this->JWTService->createToken($userDB->id);
         }
     }
 
