@@ -15,7 +15,15 @@ class EventController extends Controller
      */
     public function index()
     {
-        return $this->sendData(Event::all());
+        $event = Event::with('city')->get();
+
+        $event->transform(function ($item) {
+            $new_item = $item->toArray();
+            $new_item["participant"] = $item->eventsUsers->count();
+            return $new_item;
+        });
+
+        return $this->sendData($event);
     }
 
     /**
@@ -156,7 +164,7 @@ class EventController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Rempce a created resource in storage.
      * @deprecated
      * @param  \Illuminate\Http\Request  $request
      * @return \App\Traits\ApiResponse;
