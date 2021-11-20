@@ -8,7 +8,6 @@ class JWTService {
     private const FAILED_MESSAGE = "authentication failed";
 
     public function parseUserId($token) {
-        return 1;
         try {
             if(!$token || $token == "") throw new \Exception("Authentication failed");
 

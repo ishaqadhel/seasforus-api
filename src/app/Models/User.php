@@ -44,7 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // public function eventsUsers() {
+    //     return $this->hasMany(EventUser::class, 'id_user', 'id');
+    // }
     public function eventsUsers() {
-        return $this->hasMany(EventUser::class, 'id_user', 'id');
+        return $this->belongsToMany(User::class, EventUser::class, "id_event", "id_user", "id", "id")
+            ->withTimestamps();
     }
 }

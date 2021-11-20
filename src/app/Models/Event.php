@@ -27,7 +27,15 @@ class Event extends Model
         return $this->belongsTo(City::class, 'id_city', 'id');
     }
 
+    // public function eventsUsers() {
+    //     return $this->hasMany(EventUser::class, 'id_event', 'id');
+    // }
+
+    // public function documents() {
+    //     return $this->belongsToMany(Dokumen::class, DokumenLaporanMagang::class, "id_laporan_magang", "id_dokumen", "id_laporan_magang", "id_dokumen");
+    // }
+
     public function eventsUsers() {
-        return $this->hasMany(EventUser::class, 'id_event', 'id');
+        return $this->belongsToMany(User::class, EventUser::class, "id_event", "id_user", "id", "id");
     }
 }

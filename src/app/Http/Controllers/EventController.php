@@ -139,12 +139,41 @@ class EventController extends Controller
 
         try {
             DB::beginTransaction();
-            
-            $request->user->eventsUsers()->attach();
+
+            $request->user->eventsUsers()->attach($request->id_event, [
+                'caption' => $request->caption,
+                'link_photo' => $request->link_photo,
+                'is_event_organizer' => $request->is_event_organizer,
+            ]);
 
             DB::commit();
             return $this->sendOk();
 
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->handleException($e);
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * @deprecated
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\Traits\ApiResponse;
+     */
+    public function quitParticipation(Request $request)
+    {
+        $request->validate([
+            'id_event' => 'required',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            
+            $request->user->eventsUsers()->detach($request->id_event);
+
+            DB::commit();
+            return $this->sendOk();
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->handleException($e);
