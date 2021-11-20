@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Services\AuthenticationService;
+use App\Services\JWTService;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,10 @@ class Auth0Authentication
     {
         try {
             $service = \App::make(AuthenticationService::class);
-            if ($service instanceof AuthenticationService) {
-                $user = $service->getUserById(1);
+            $jwtService = \App::make(JWTService::class);
+            if ($service instanceof AuthenticationService && $jwtService instanceof JWTService) {
+                $userId = $jwtService->parseUserId($request->bearerToken());
+                $user = $service->getUserById($userId);
                 $request->request->add(['user', $user]);
                 return $next($request);
             }
