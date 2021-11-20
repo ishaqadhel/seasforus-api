@@ -26,7 +26,7 @@ class Event extends Model
         return $this->belongsTo(City::class, 'id_city', 'id');
     }
 
-    public function events_users() {
-        return $this->hasMany(Event_User::class, 'id_event', 'id');
+    public function eventsUsers() {
+        return $this->hasMany(EventUser::class, 'id_event', 'id');
     }
 }
