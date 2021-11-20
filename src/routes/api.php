@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// TODO: use prefix
+Route::get('/events', [EventController::class, 'index'])->name('events-index');
+Route::get('/events/{id}', [EventController::class, 'show'])->name('events-show');
+Route::post('/events', [EventController::class, 'store'])->name('events-store');
+Route::put('/events', [ProductController::class, 'events-update']);
+Route::delete('/events/{id}', [ProductController::class, 'events-destroy']);
