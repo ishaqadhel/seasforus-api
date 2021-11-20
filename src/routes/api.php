@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth0Controller;
 use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
