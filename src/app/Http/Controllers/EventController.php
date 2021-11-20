@@ -123,4 +123,31 @@ class EventController extends Controller
             return $this->handleException($e);
         }
     }
+
+    /**
+     * Store a newly created resource in storage.
+     * @deprecated
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\Traits\ApiResponse;
+     */
+    public function createParticipation(Request $request)
+    {
+        $request->validate([
+            'id_event' => 'required',
+            'is_event_organizer' => 'required',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            
+            $request->user->eventsUsers()->attach();
+
+            DB::commit();
+            return $this->sendOk();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->handleException($e);
+        }
+    }
 }
