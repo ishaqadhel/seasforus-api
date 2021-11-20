@@ -27,7 +27,7 @@ class Auth0Controller extends Controller
     }
 
     public function callback() {
-        $service = \App::make('auth0');
+        $service = App::make('auth0');
 
         // Try to get the user information
         $profile = $service->getUser();
@@ -45,7 +45,7 @@ class Auth0Controller extends Controller
                 // If not, the user will be fine
                 $user = $auth0User;
             }
-            \Auth::login($user, $service->rememberUser());
+            
             $userDB = User::where('email', $user->getUserInfo()['email'])->first();
             if(!$userDB) {
                 $userDB = User::create([
@@ -57,12 +57,6 @@ class Auth0Controller extends Controller
             }
             echo $this->JWTService->createToken($userDB->id);
         }
-    }
-
-    public function info() {
-        
-        $user = Auth::user();
-        dd(Auth::user()->getUserInfo());
     }
 
     public function logout() {
