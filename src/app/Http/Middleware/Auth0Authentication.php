@@ -6,6 +6,7 @@ use App\Services\AuthenticationService;
 use App\Services\JWTService;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class Auth0Authentication
 {
@@ -19,8 +20,8 @@ class Auth0Authentication
     public function handle(Request $request, Closure $next)
     {
         try {
-            $service = \App::make(AuthenticationService::class);
-            $jwtService = \App::make(JWTService::class);
+            $service = App::make(AuthenticationService::class);
+            $jwtService = App::make(JWTService::class);
             if ($service instanceof AuthenticationService && $jwtService instanceof JWTService) {
                 $userId = $jwtService->parseUserId($request->bearerToken());
                 $user = $service->getUserById($userId);
