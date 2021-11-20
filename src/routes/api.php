@@ -14,11 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// TODO: use prefix
-Route::get('/events', [EventController::class, 'index'])->name('events-index');
-Route::get('/events/{id}', [EventController::class, 'show'])->name('events-show');
-Route::post('/events', [EventController::class, 'store'])->name('events-store');
-Route::post('/events/participate', [EventController::class, 'createParticipation'])->name('events-createParticipation')->middleware('auth0');
-Route::post('/events/quit-participate', [EventController::class, 'quitParticipation'])->name('events-quitParticipation')->middleware('auth0');
-Route::put('/events', [EventController::class, 'events-update']);
-Route::delete('/events/{id}', [EventController::class, 'events-destroy']);
+Route::prefix('auth0-endpoints')->name('auth0-endpoints.')->group(function () {
+    Route::get('callback', [Auth0Controller::class, 'callback'])->name('callback');
+    Route::get('login', [Auth0Controller::class, 'login'])->name('login');
+    Route::get('logout', [Auth0Controller::class, 'logout'])->name('logout');
+});
+
+Route::prefix('events')->name('events.')->group(function () {
+    Route::get('/', [EventController::class, 'index'])->name('.index');
+    Route::get('/{id}', [EventController::class, 'show'])->name('.show');
+    Route::post('/', [EventController::class, 'store'])->name('.store');
+    Route::post('/participate', [EventController::class, 'createParticipation'])->name('.createParticipation')->middleware('auth0');
+    Route::post('/quit-participate', [EventController::class, 'quitParticipation'])->name('.quitParticipation')->middleware('auth0');
+    Route::put('/', [EventController::class, '.update']);
+    Route::delete('/{id}', [EventController::class, '.destroy']);
+});

@@ -45,7 +45,7 @@ class Auth0Controller extends Controller
                 // If not, the user will be fine
                 $user = $auth0User;
             }
-            
+
             $userDB = User::where('email', $user->getUserInfo()['email'])->first();
             if(!$userDB) {
                 $userDB = User::create([
@@ -55,7 +55,14 @@ class Auth0Controller extends Controller
                 ]);
                 $userDB->save();
             }
-            echo $this->JWTService->createToken($userDB->id);
+            $url = config('frontend_url');
+            $token = $this->JWTService->createToken($userDB->id);
+            $tokenURL = sprintf(
+                '%s/?token=%s',
+                $url,
+                $token
+            );
+            return Redirect::intended($tokenURL);
         }
     }
 
