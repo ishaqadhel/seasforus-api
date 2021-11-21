@@ -49,7 +49,7 @@ class User extends Authenticatable
     //     return $this->hasMany(EventUser::class, 'id_user', 'id');
     // }
     public function eventsUsers() {
-        return $this->belongsToMany(Event::class, EventUser::class, "id_event", "id_user", "id", "id")
+        return $this->belongsToMany(Event::class, EventUser::class, "id_user", "id_event", "id", "id")
             ->withTimestamps();
     }
 }
