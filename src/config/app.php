@@ -56,6 +56,8 @@ return [
 
     'frontend_url' => env('APP_FE_URL', 'http://localhost'),
 
+    'logout_callback_url' => env('APP_FE_LOGOUT_URL', 'http://localhost'),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*
