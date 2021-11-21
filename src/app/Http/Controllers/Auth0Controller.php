@@ -52,6 +52,7 @@ class Auth0Controller extends Controller
                     "name" => $user->getUserInfo()['name'],
                     "email" => $user->getUserInfo()['email'],
                     "point" => 0,
+                    "link_avatar" => $user->getUserInfo()['picture'],
                 ]);
                 $userDB->save();
             }
