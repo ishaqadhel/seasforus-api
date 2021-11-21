@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth0Controller;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\LeaderboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +22,7 @@ Route::prefix('auth0-endpoints')->name('auth0-endpoints.')->group(function () {
     Route::get('logout', [Auth0Controller::class, 'logout'])->name('logout');
 });
 
-Route::prefix('events')->name('events.')->group(function () {
+Route::prefix('events')->name('events')->group(function () {
     Route::get('/', [EventController::class, 'index'])->name('.index');
     Route::get('/{id}', [EventController::class, 'show'])->name('.show');
     Route::post('/', [EventController::class, 'store'])->name('.store');
@@ -29,4 +30,8 @@ Route::prefix('events')->name('events.')->group(function () {
     Route::post('/quit-participate', [EventController::class, 'quitParticipation'])->name('.quitParticipation')->middleware('auth0');
     Route::put('/', [EventController::class, '.update']);
     Route::delete('/{id}', [EventController::class, '.destroy']);
+});
+
+Route::prefix('leaderboard')->name('leaderboard')->group(function () {
+    Route::get('/', [LeaderboardController::class, 'index'])->name('.index');
 });
