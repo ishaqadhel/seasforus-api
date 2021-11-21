@@ -242,7 +242,6 @@ class EventController extends Controller
         $request->validate([
             'id_event' => 'required',
             'caption' => 'required',
-            'link_photo' => 'required',
         ]);
 
         $photo = $request->file('photo');
