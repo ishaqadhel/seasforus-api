@@ -27,6 +27,7 @@ Route::prefix('events')->name('events')->group(function () {
     Route::get('/{id}', [EventController::class, 'show'])->name('.show');
     Route::post('/', [EventController::class, 'store'])->name('.store');
     Route::post('/participate', [EventController::class, 'createParticipation'])->name('.createParticipation')->middleware('auth0');
+    Route::put('/participate', [EventController::class, 'editParticipation'])->name('.editParticipation')->middleware('auth0');
     Route::post('/quit-participate', [EventController::class, 'quitParticipation'])->name('.quitParticipation')->middleware('auth0');
     Route::put('/', [EventController::class, '.update']);
     Route::delete('/{id}', [EventController::class, '.destroy']);

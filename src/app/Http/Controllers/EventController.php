@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -170,6 +171,58 @@ class EventController extends Controller
     }
 
     /**
+     * Update or Edit events_users row for upload photo and caption after event
+     * @deprecated
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\Traits\ApiResponse;
+     */
+    public function editParticipation(Request $request)
+    {
+        $request->validate([
+            'id_event' => 'required',
+            'caption' => 'required',
+            'link_photo' => 'required',
+        ]);
+
+        $eventUser = EventUser::where('id_event', '=', $request->id_event)
+            ->where('id_user', '=', $request->user->id)->first();
+
+        $user = User::find($request->user->id);
+
+        if(!$user) {
+            return $this->sendError('Unauthorized.'); 
+        }
+
+        if(!$eventUser) {
+            return $this->sendError('You did not participate in this event.'); 
+        }
+
+        if($eventUser->caption != null || $eventUser->link_photo != null) {
+            return $this->sendError('You already made a post on this event.'); 
+        }
+        
+        try {
+            DB::beginTransaction();
+
+            $eventUser->update([
+                'caption' => $request->caption,
+                'link_photo' => $request->link_photo,
+            ]);
+
+            $user->update([
+                'point' => $user->point + 1,
+            ]);
+
+            DB::commit();
+            return $this->sendOk();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->handleException($e);
+        }
+    }
+
+    /**
      * Rempce a created resource in storage.
      * @deprecated
      * @param  \Illuminate\Http\Request  $request
@@ -180,6 +233,17 @@ class EventController extends Controller
         $request->validate([
             'id_event' => 'required',
         ]);
+
+        $eventUser = EventUser::where('id_event', '=', $request->id_event)
+            ->where('id_user', '=', $request->user->id)->first();
+        
+        if(!$eventUser) {
+            return $this->sendError('You did not participate in this event.'); 
+        }
+
+        if($eventUser->caption != null || $eventUser->link_photo != null) {
+            return $this->sendError('You already made a post on this event, cannot quit this event.'); 
+        }
 
         try {
             DB::beginTransaction();
