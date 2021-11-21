@@ -264,7 +264,7 @@ class EventController extends Controller
         $photo = $request->file('photo');
         $filename = md5("{$request->id_event}". time()) . "." . $photo->getClientOriginalExtension();
         $this->AWSFileStorageService->save(file_get_contents($photo), $filename);
-        $photoUrl = $this->AWSFileStorageService->getDiskURL($filename);
+        $photoUrl = $this->AWSFileStorageService->getUrl($filename);
         
         try {
             DB::beginTransaction();
