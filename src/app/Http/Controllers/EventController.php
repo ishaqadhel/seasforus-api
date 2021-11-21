@@ -43,6 +43,12 @@ class EventController extends Controller
 
         $eventsUsers = EventUser::where('id_user', $request->user->id)->with('event')->get();
 
+        $eventsUsers->transform(function ($item) {
+            $new_item = $item->toArray();
+            $new_item["city_name"] = $item->event->city->name;
+            return $new_item;
+        });
+
         return $this->sendData($eventsUsers);
     }
 
