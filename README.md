@@ -1,6 +1,6 @@
 # Seas For Us API
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 An API using Laravel, MySQL, Nginx with Docker.
@@ -69,6 +69,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://ishaqadhel.com"><img src="https://avatars.githubusercontent.com/u/49280352?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ishaqadhel</b></sub></a><br /><a href="https://github.com/ishaqadhel/seasforus-api/commits?author=ishaqadhel" title="Code">💻</a> <a href="#infra-ishaqadhel" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     <td align="center"><a href="https://github.com/franszhafran"><img src="https://avatars.githubusercontent.com/u/49693862?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Muhammad Zhafran</b></sub></a><br /><a href="https://github.com/ishaqadhel/seasforus-api/commits?author=franszhafran" title="Code">💻</a> <a href="#infra-franszhafran" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://theodorusclarence.com"><img src="https://avatars.githubusercontent.com/u/55318172?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Theodorus Clarence</b></sub></a><br /><a href="https://github.com/ishaqadhel/seasforus-api/commits?author=theodorusclarence" title="Code">💻</a> <a href="#design-theodorusclarence" title="Design">🎨</a></td>
   </tr>
 </table>
 
