@@ -244,10 +244,6 @@ class EventController extends Controller
             'caption' => 'required',
         ]);
 
-        $photo = $request->file('photo');
-        $filename = md5("{$request->id_event}". time()) . "." . $photo->getClientOriginalExtension();
-        $photoUrl = $this->AWSFileStorageService->save(file_get_contents($photo), $filename);
-
         $eventUser = EventUser::where('id_event', '=', $request->id_event)
             ->where('id_user', '=', $request->user->id)->first();
 
@@ -264,6 +260,11 @@ class EventController extends Controller
         if($eventUser->caption != null || $eventUser->link_photo != null) {
             return $this->sendError('You already made a post on this event.'); 
         }
+        
+        $photo = $request->file('photo');
+        $filename = md5("{$request->id_event}". time()) . "." . $photo->getClientOriginalExtension();
+        $this->AWSFileStorageService->save(file_get_contents($photo), $filename);
+        $photoUrl = $this->AWSFileStorageService->getDiskURL($filename);
         
         try {
             DB::beginTransaction();
