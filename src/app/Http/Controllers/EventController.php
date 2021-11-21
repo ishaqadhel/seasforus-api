@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -145,12 +146,17 @@ class EventController extends Controller
             'is_event_organizer' => 'required',
         ]);
 
+        $eventUser = EventUser::where('id_event', '=', $request->id_event)
+            ->where('id_user', '=', $request->user->id)->first();
+
+        if($eventUser) {
+            return $this->sendError('Already Participate.'); 
+        }
+        
         try {
             DB::beginTransaction();
 
             $request->user->eventsUsers()->attach($request->id_event, [
-                'caption' => $request->caption,
-                'link_photo' => $request->link_photo,
                 'is_event_organizer' => $request->is_event_organizer,
             ]);
 
