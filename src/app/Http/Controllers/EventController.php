@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventUser;
 use App\Models\User;
+use App\Services\JWTService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 
 class EventController extends Controller
 {
+    public function __construct(
+        private JWTService $JWTService,
+    ) {}
+
     /**
      * Display a listing of the resource.
      *
@@ -238,6 +243,10 @@ class EventController extends Controller
             'link_photo' => 'required',
         ]);
 
+        $photo = $request->file('photo');
+        $filename = md5("{$request->id_event}". time()) . "." . $photo->getClientOriginalExtension();
+        $photoUrl = $this->JWTService->save(file_get_contents($photo), $filename);
+
         $eventUser = EventUser::where('id_event', '=', $request->id_event)
             ->where('id_user', '=', $request->user->id)->first();
 
@@ -260,7 +269,7 @@ class EventController extends Controller
 
             $eventUser->update([
                 'caption' => $request->caption,
-                'link_photo' => $request->link_photo,
+                'link_photo' => $photoUrl,
             ]);
 
             $user->update([
