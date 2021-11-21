@@ -1,9 +1,41 @@
-# Seas For Us API
+# api.seasfor.us
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-An API using Laravel, MySQL, Nginx with Docker.
+![seasforus-poster](https://user-images.githubusercontent.com/55318172/142764894-9d46ecac-f674-4e5d-bae8-fc9a82ecb953.jpg)
+
+Demo video: https://youtu.be/stY-fpvqkh8
+
+🖼️ [Frontend Repository](https://github.com/theodorusclarence/seasfor.us)
+
+🧠 [Backend Repository](https://github.com/ishaqadhel/seasforus-api)
+
+## 💡 Background
+
+There are **5.25 trillion pieces of plastic waste** estimated to be in our oceans. 269,000 tons float, 4 billion microfibers per km² dwell below the surface. This alarming number of pieces of plastic damages the marine life in our ocean.
+
+This platform will help the #TeamSeas initiative started by Mr. Beast and Mark Rober, to be the most-impactful cleanup project of all time. #TeamSeas will work with Ocean Conservancy and its partners to remove millions of pounds of plastic and trash from beaches all around the world. They’ll also send professional crews to clean up some of the most iconic, vulnerable ocean spaces.
+
+With this already awesome initiative, we create the #SeasForUs platform that will **speed up** the process of finding clean-up events in your local area. We want it to be as easy as possible for people to contribute and help #TeamSeas clean up coastal areas. 
+
+You can start by looking at cleanup events in your local area, and join them. You will directly help at your local beaches to clean up all the trash that we can pick during the time of the event. Then, you can post your activity to the post-board so you can share your moments of contribution to the community.
+
+To help you spark up the motivation to come and clean up the events, we also provide a Leaderboard that will rank how many events you've been attending.
+
+## 🧑‍🎓 What we learned
+
+For some of us, this is the first hackathon we went to, and we are really pumped up that all of it must be done only in 36 hours. Having a limited time makes us work faster with a more efficient strategy.
+
+We are utilizing GitHub Issues as our project management platform. We started by listing all of the features that we want to build and develop gradually as we work parallel with front-end and back-end applications.
+
+## 🧐 How we built our project
+
+#SeasForUs is a web app using Laravel as the back-end framework. Data from users is sent to the server and stored in a MySQL database. The frontend was created using Next.js and TypeScript to provide a good developer experience as well as other advantages like server-side rendering and image optimization 
+
+## 🤯 Challenges we faced
+
+This is the first time we are using Auth0 as the authentication provider. Although Auth0 recommends using the same framework with the frontend, which is using Node.js, we tried to use Laravel as our back-end framework. We have some hiccup along the way but it is solved and works really great. Auth0 is fairly simple to use with awesome integration with Google OAuth. It is painless and really robust.
 
 ## 🛠️ Tools
 
@@ -52,7 +84,7 @@ An API using Laravel, MySQL, Nginx with Docker.
 - Run command ```docker-compose build``` on your terminal
 - Run command ```docker-compose up -d``` on your terminal
 - Run command ```docker exec -it php /bin/sh``` on your terminal
-- - Run command ```composer install``` on your terminal after went into php container on docker
+- Run command ```composer install``` on your terminal after went into php container on docker
 - Run command ```chmod -R 777 storage``` on your terminal after went into php container on docker
 - If app:key still empty on .env run ```php artisan key:generate``` on your terminal after went into php container on docker
 - To run artisan command like migrate, etc. go to php container using ```docker exec -it php /bin/sh```
