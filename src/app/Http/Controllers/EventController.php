@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventUser;
 use App\Models\User;
-use App\Services\JWTService;
+use App\Services\AWSFileStorageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 class EventController extends Controller
 {
     public function __construct(
-        private JWTService $JWTService,
+        private AWSFileStorageService $AWSFileStorageService,
     ) {}
 
     /**
@@ -246,7 +246,7 @@ class EventController extends Controller
 
         $photo = $request->file('photo');
         $filename = md5("{$request->id_event}". time()) . "." . $photo->getClientOriginalExtension();
-        $photoUrl = $this->JWTService->save(file_get_contents($photo), $filename);
+        $photoUrl = $this->AWSFileStorageService->save(file_get_contents($photo), $filename);
 
         $eventUser = EventUser::where('id_event', '=', $request->id_event)
             ->where('id_user', '=', $request->user->id)->first();
