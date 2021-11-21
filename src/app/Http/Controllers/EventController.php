@@ -16,16 +16,34 @@ class EventController extends Controller
      *
      * @return \App\Traits\ApiResponse;
      */
-    public function index()
+    public function index(Request $request)
     {
         $event = Event::with('city')->get();
 
-        $event->transform(function ($item) {
-            $new_item = $item->toArray();
-            $new_item["participant"] = $item->eventsUsers->count();
-            return $new_item;
-        });
+        if($request->user instanceof User) {
+            $userId = $request->user->id;
+            
+            $event->transform(function ($item) use($userId){
+                $new_item = $item->toArray();
 
+                $new_item["participant"] = $item->eventsUsers->count();
+                
+                $joined = $item->whereHas('eventsUsers', function (Builder $query) use($userId) {
+                    $query->where('id_user', '=', $userId);
+                })->count();
+                $new_item["joined"] = $joined > 0;
+
+                return $new_item;
+            });
+        } else {
+            $event->transform(function ($item) {
+                $new_item = $item->toArray();
+                $new_item["participant"] = $item->eventsUsers->count();
+                $new_item["joined"] = false;
+                return $new_item;
+            });
+        }
+        
         return $this->sendData($event);
     }
 

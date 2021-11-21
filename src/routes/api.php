@@ -24,7 +24,7 @@ Route::prefix('auth0-endpoints')->name('auth0-endpoints.')->group(function () {
 });
 
 Route::prefix('events')->name('events')->group(function () {
-    Route::get('/', [EventController::class, 'index'])->name('.index');
+    Route::get('/', [EventController::class, 'index'])->name('.index')->middleware('auth0soft');
     Route::get('/mine', [EventController::class, 'mine'])->name('.mine')->middleware('auth0');
     Route::get('/{id}', [EventController::class, 'show'])->name('.show');
     Route::get('/post/{id}', [EventController::class, 'post'])->name('.post');
