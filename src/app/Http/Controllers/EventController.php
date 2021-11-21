@@ -34,7 +34,7 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        return $this->sendData(Event::find($id));
+        return $this->sendData(Event::with('city')->find($id));
     }
 
     /**
