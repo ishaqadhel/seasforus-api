@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         
         $this->call([
             CitiesSeeder::class,
+            EventsSeeder::class,
         ]);
     }
 }

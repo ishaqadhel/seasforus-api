@@ -3,12 +3,15 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class CitiesSeeder extends Seeder
 {
+    private $city_name = [
+        "Jakarta", "Bali", "Bandung", "Surabaya", "Aceh", "Lombok", "Malang", "Ponorogo", "Anyer", "Yogyakarta", "Jimbaran", "Canggu"
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -16,15 +19,15 @@ class CitiesSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
         $rows = [];
-
-        for($i=0; $i<50; $i++) {
+        $i = 1;
+        foreach($this->city_name as $city) {
             $rows[] = [
-                "name" => $faker->city(),
-                "created_at" => Carbon::now(),
+                "name" => $city,
+                "created_at" => Carbon::now(),            
             ];
-            echo 'Create hospital data: ' . $i + 1 . PHP_EOL;
+            echo 'Create city data: ' . $i . PHP_EOL;
+            $i++;
         }
 
         $chunks = array_chunk($rows, 5);

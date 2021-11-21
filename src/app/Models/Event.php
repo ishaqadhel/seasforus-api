@@ -21,6 +21,7 @@ class Event extends Model
         'name',
         'description',
         'date',
+        'link_image',
     ];
 
     public function city() {
