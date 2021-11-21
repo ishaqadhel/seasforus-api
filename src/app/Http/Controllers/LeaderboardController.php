@@ -14,7 +14,7 @@ class LeaderboardController extends Controller
      */
     public function index()
     {
-        $user = User::orderBy('point')->get();
+        $user = User::orderBy('point', 'desc')->get();
 
         return $this->sendData($user);
     }
