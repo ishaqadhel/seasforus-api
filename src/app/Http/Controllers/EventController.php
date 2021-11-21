@@ -18,7 +18,7 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
-        $event = Event::with('city')->get();
+        $event = Event::with('city')->orderBy('date', 'desc')->get();
 
         if($request->user instanceof User) {
             $userId = $request->user->id;
