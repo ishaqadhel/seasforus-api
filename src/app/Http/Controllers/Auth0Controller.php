@@ -63,9 +63,6 @@ class Auth0Controller extends Controller
                 $url,
                 $token
             );
-
-            echo $token;
-            dd($tokenURL);
             return Redirect::intended($tokenURL);
         }
     }
