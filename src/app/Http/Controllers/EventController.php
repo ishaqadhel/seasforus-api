@@ -49,12 +49,24 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $id (event)
      * @return \App\Traits\ApiResponse;
      */
     public function show($id)
     {
         return $this->sendData(Event::with('city')->find($id));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id (event)
+     * @return \App\Traits\ApiResponse;
+     */
+    public function post($id) {
+
+        $data = EventUser::where('id_event', $id)->with('user')->get();
+        return $this->sendData($data);
     }
 
     /**
