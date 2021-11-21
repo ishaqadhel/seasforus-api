@@ -26,6 +26,14 @@ class Auth0Controller extends Controller
         );
     }
 
+    public function info(Request $request) {
+        return $this->sendData([
+            "id" => $request->user->id,
+            "name" => $request->user->name,
+            "photo" => $request->user->link_avatar,
+        ]);
+    }
+
     public function callback() {
         $service = App::make('auth0');
 

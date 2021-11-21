@@ -20,6 +20,7 @@ Route::prefix('auth0-endpoints')->name('auth0-endpoints.')->group(function () {
     Route::get('callback', [Auth0Controller::class, 'callback'])->name('callback');
     Route::get('login', [Auth0Controller::class, 'login'])->name('login');
     Route::get('logout', [Auth0Controller::class, 'logout'])->name('logout');
+    Route::get('info', [Auth0Controller::class, 'info'])->name('info')->middleware('auth0');;
 });
 
 Route::prefix('events')->name('events')->group(function () {
