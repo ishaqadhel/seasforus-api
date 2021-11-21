@@ -7,6 +7,7 @@ use App\Models\EventUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class EventController extends Controller
 {
@@ -26,6 +27,23 @@ class EventController extends Controller
         });
 
         return $this->sendData($event);
+    }
+
+    /**
+     * Display a listing of user's event from the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\Traits\ApiResponse;
+     */
+    public function mine(Request $request)
+    {
+        $request->validate([
+            'user' => 'required',
+        ]);
+
+        $eventsUsers = EventUser::where('id_user', $request->user->id)->with('event')->get();
+
+        return $this->sendData($eventsUsers);
     }
 
     /**
