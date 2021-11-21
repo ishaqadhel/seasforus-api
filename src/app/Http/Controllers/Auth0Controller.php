@@ -55,7 +55,7 @@ class Auth0Controller extends Controller
                 ]);
                 $userDB->save();
             }
-            $url = config('config.frontend_url');
+            $url = config('app.frontend_url');
             $token = $this->JWTService->createToken($userDB->id);
             $tokenURL = sprintf(
                 '%s/?token=%s',
