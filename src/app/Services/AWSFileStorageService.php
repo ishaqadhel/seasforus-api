@@ -5,7 +5,7 @@ use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
-class AWSFileStorage {
+class AWSFileStorageService {
     /**
      * Store a file to storage
      * 
