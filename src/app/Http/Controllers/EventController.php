@@ -67,8 +67,10 @@ class EventController extends Controller
         $eventsUsers = EventUser::where('id_user', $request->user->id)->with('event')->get();
 
         $eventsUsers->transform(function ($item) {
+            $eventParticipant = Event::where('id', '=', $item->event->id)->first();
             $new_item = $item->toArray();
             $new_item["city_name"] = $item->event->city->name;
+            $new_item["participant"] = $eventParticipant->eventsUsers->count();
             return $new_item;
         });
 
